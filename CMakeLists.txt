@@ -8,7 +8,7 @@ set(CMAKE_OBJC_STANDARD 11)
 set(CMAKE_OBJC_STANDARD_REQUIRED TRUE)
 
 if(MSVC OR MINGW)
-  set(PLATFORM_SRCS src/windows/winwindow.c)
+  set(PLATFORM_SRCS src/windows/winwindow.c src/windows/winevent.c)
 endif(MSVC OR MINGW)
 
 set(SRCS ${PLATFORM_SRCS} src/main.c src/window.c)

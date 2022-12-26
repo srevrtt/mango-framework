@@ -6,7 +6,6 @@
 #include <Windows.h>
 
 HWND hwnd;
-MSG msg;
 bool windowCreated = false;
 
 // Win32 window procedure / message loop
@@ -14,6 +13,9 @@ LRESULT CALLBACK wndproc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
   switch (msg)
   {
+  case WM_DESTROY:
+    PostQuitMessage(0);
+    break;
   default:
     return DefWindowProcW(hwnd, msg, wparam, lparam);
   }
@@ -29,7 +31,7 @@ void windows_window_new(unsigned int width, unsigned int height, const char *tit
 
     // Window class
     WNDCLASSW wc;
-    wc.hIcon = LoadIconW(NULL, IDI_APPLICATION);
+    wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
     wc.cbClsExtra = 0;
     wc.cbWndExtra = 0;
     wc.lpfnWndProc = wndproc;
@@ -37,7 +39,7 @@ void windows_window_new(unsigned int width, unsigned int height, const char *tit
     wc.lpszMenuName = NULL;
     wc.lpszClassName = L"window";
     wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
-    wc.hCursor = LoadCursorW(NULL, IDC_ARROW);
+    wc.hCursor = LoadCursor(NULL, IDC_ARROW);
     wc.hInstance = GetModuleHandleW(NULL);
 
     if (!RegisterClassW(&wc))
@@ -46,12 +48,16 @@ void windows_window_new(unsigned int width, unsigned int height, const char *tit
       exit(1);
     }
 
+    // Convert UTF-8 to wide char array
+    wchar_t *newtitle = malloc(4096 * sizeof(wchar_t));
+    MultiByteToWideChar(CP_UTF8, 0, title, -1, newtitle, 4096);
+
     // Create the window
     hwnd = CreateWindowExW(
       WS_EX_CLIENTEDGE,
       wc.lpszClassName,
-      title,
-      WS_VISIBLE | WS_OVERLAPPEDWINDOW,
+      newtitle,
+      WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT,
       CW_USEDEFAULT,
       width,
@@ -80,4 +86,10 @@ void windows_window_destroy()
   {
     DestroyWindow(hwnd);
   }
+}
+
+// Gets the HNWD of the window
+HWND windows_window_getHandle()
+{
+  return hwnd;
 }
