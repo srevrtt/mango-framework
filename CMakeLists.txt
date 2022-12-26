@@ -7,7 +7,11 @@ set(CMAKE_C_STANDARD_REQUIRED TRUE)
 set(CMAKE_OBJC_STANDARD 11)
 set(CMAKE_OBJC_STANDARD_REQUIRED TRUE)
 
-set(SRCS src/main.c)
+if(MSVC OR MINGW)
+  set(PLATFORM_SRCS src/windows/winwindow.c)
+endif(MSVC OR MINGW)
+
+set(SRCS ${PLATFORM_SRCS} src/main.c src/window.c)
 
 add_subdirectory(external/lua)
 include_directories(external/lua/src)
