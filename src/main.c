@@ -7,6 +7,8 @@
 int main(int argc, char *argv[])
 {
   mango_window_new(1280, 720, "Mango Framework Test");
+  mango_window_setColor(0, 0, 0);
+
   MangoEvent event;
 
   while (1)
@@ -17,6 +19,9 @@ int main(int argc, char *argv[])
     {
       break;
     }
+
+    mango_window_clear();
+    mango_window_render();
   }
 
   mango_window_destroy();

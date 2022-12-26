@@ -8,6 +8,8 @@
 #include "include/winwindow.h"
 #include "include/wincontext.h"
 
+HWND glHwnd;
+
 // OpenGL prodecures (functions)
 typedef HGLRC WINAPI wglCreateContextAttribsARB_type(HDC hdc, HGLRC hShareContext,
   const int *attribList);
@@ -110,7 +112,8 @@ void windows_opengl_init()
 // This is called after window creation.
 void windows_opengl_createContext()
 {
-  HDC hdc = GetDC(windows_window_getHandle());
+  glHwnd = windows_window_getHandle();
+  HDC hdc = GetDC(glHwnd);
 
   // Choose the pixel format the "modern" way
   int pfa[] = {
@@ -152,4 +155,10 @@ void windows_opengl_createContext()
   wglMakeCurrent(hdc, context);
 
   gladLoadGL();
+}
+
+// Renders everything to the screen
+void windows_opengl_render()
+{
+  SwapBuffers(GetDC(glHwnd));
 }

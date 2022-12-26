@@ -3,5 +3,6 @@
 
 void windows_opengl_init();
 void windows_opengl_createContext();
+void windows_opengl_render();
 
 #endif
