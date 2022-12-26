@@ -11,7 +11,7 @@ if(MSVC OR MINGW)
   set(PLATFORM_SRCS src/windows/winwindow.c src/windows/winevent.c)
 endif(MSVC OR MINGW)
 
-set(SRCS ${PLATFORM_SRCS} src/main.c src/window.c)
+set(SRCS ${PLATFORM_SRCS} src/main.c src/window.c src/event.c)
 
 add_subdirectory(external/lua)
 include_directories(external/lua/src)

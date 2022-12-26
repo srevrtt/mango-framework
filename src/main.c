@@ -2,19 +2,19 @@
 #include <stdlib.h>
 
 #include "include/window.h"
-#include "windows/include/winevent.h"
+#include "include/event.h"
 
 int main(int argc, char *argv[])
 {
   mango_window_new(1280, 720, "Mango Framework Test");
-  int running = 1;
+  MangoEvent event;
 
-  while (running)
+  while (1)
   {
-    windows_event_poll();
+    mango_event_wait(&event);
 
-    if (windows_event_closeRequested()) {
-      running = 0;
+    if (event.closeRequested)
+    {
       break;
     }
   }
