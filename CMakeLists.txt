@@ -8,10 +8,10 @@ set(CMAKE_OBJC_STANDARD 11)
 set(CMAKE_OBJC_STANDARD_REQUIRED TRUE)
 
 if(MSVC OR MINGW)
-  set(PLATFORM_SRCS src/windows/winwindow.c src/windows/winevent.c)
+  set(PLATFORM_SRCS src/windows/winwindow.c src/windows/winevent.c src/windows/wincontext.c)
 endif(MSVC OR MINGW)
 
-set(SRCS ${PLATFORM_SRCS} src/main.c src/window.c src/event.c)
+set(SRCS external/glad/glad.c ${PLATFORM_SRCS} src/main.c src/window.c src/event.c)
 
 add_subdirectory(external/lua)
 include_directories(external/lua/src)
