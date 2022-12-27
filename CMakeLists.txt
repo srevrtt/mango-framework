@@ -15,6 +15,11 @@ if(UNIX AND NOT APPLE)
   set(PLATFORM_SRCS src/linux/linwindow.c src/linux/linevent.c)
 endif(UNIX AND NOT APPLE)
 
+if(APPLE)
+  set(PLATFORM_SRCS src/macos/macwindow.m src/macos/macapp.m src/macos/macevent.m)
+  set(CMAKE_C_LINK_FLAGS "${CMAKE_C_LINK_FLAGS} -framework Foundation -framework Cocoa")
+endif(APPLE)
+
 set(SRCS external/glad/glad.c ${PLATFORM_SRCS} src/main.c src/window.c src/event.c)
 
 add_subdirectory(external/lua)

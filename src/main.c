@@ -4,8 +4,8 @@
 #include "include/window.h"
 #include "include/event.h"
 
-#include "linux/include/linwindow.h"
-#include "linux/include/linevent.h"
+#include "macos/include/macwindow.h"
+#include "macos/include/macevent.h"
 
 int main(int argc, char *argv[])
 {
@@ -29,19 +29,15 @@ int main(int argc, char *argv[])
 
   // mango_window_destroy();
 
-  // Testing Linux
-  linux_window_new(1280, 720, "Mango Framework Test");
+  // Testing macOS
+  macos_window_create(1280, 720, "Mango Framework Test");
 
-  while (1)
+  while (!macos_event_closeRequested())
   {
-    linux_event_poll();
-
-    if (linux_event_closeRequested() == 1)
-    {
-      break;
-    }
+    macos_event_poll();
   }
 
-  linux_window_destroy();
+  macos_window_destroy();
+  
   return 0;
 }
