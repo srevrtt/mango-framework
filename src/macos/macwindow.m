@@ -29,5 +29,5 @@ void macos_window_create(unsigned int width, unsigned int height, const char *ti
 // Closes the window
 void macos_window_destroy()
 {
-  // [window close];
+  [NSApp terminate:nil];
 }

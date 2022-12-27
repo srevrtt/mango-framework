@@ -6,8 +6,10 @@
 #include "include/window.h"
 
 #ifdef _WIN32
-#include "windows/include/winwindow.h"
-#include "windows/include/wincontext.h"
+  #include "windows/include/winwindow.h"
+  #include "windows/include/wincontext.h"
+#elif __APPLE__
+  #include "macos/include/macwindow.h"
 #endif
 
 // Window's color
@@ -23,6 +25,8 @@ void mango_window_new(unsigned int width, unsigned int height, const char *title
     windows_opengl_createContext();
 
     glViewport(0, 0, width, height);
+  #elif __APPLE__
+    macos_window_create(width, height, title);
   #endif
 }
 
@@ -31,6 +35,8 @@ void mango_window_destroy()
 {
   #ifdef _WIN32
     windows_window_destroy();
+  #elif __APPLE__
+    macos_window_destroy();
   #endif
 }
 

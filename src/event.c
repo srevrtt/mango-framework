@@ -5,6 +5,8 @@
 
 #ifdef _WIN32
   #include "windows/include/winevent.h"
+#elif __APPLE__
+  #include "macos/include/macevent.h"
 #endif
 
 // Updates each value in the event provided by polling for events
@@ -14,6 +16,13 @@ void mango_event_poll(MangoEvent *event)
     windows_event_poll();
 
     if (windows_event_closeRequested())
+    {
+      event->closeRequested = 1;
+    }
+  #elif __APPLE__
+    macos_event_poll();
+
+    if (macos_event_closeRequested())
     {
       event->closeRequested = 1;
     }

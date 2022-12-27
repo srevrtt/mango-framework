@@ -26,7 +26,7 @@ int closeRequested = false;
 @implementation WindowDelegate
 - (BOOL)windowShouldClose:(id)sender {
   closeRequested = 1;
-  return YES;
+  return NO;
 }
 @end
 
